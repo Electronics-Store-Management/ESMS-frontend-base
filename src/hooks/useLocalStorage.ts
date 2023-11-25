@@ -3,15 +3,13 @@ import { SetStateAction, useCallback, useEffect, useState } from "react";
 export default function useLocalStorage<T>(
 	name: string,
 	defaultValue: T
-): [T | undefined, (data: T) => void, boolean] {
+): [T | undefined, (data: T) => void] {
 	const [data, _setData] = useState<T>();
-	const [isSet, setIsSet] = useState(false);
 
 	useEffect(() => {
 		if (localStorage.getItem(name))
 			_setData(JSON.parse(localStorage.getItem(name) || ""));
 		else _setData(defaultValue);
-		setIsSet(true);
 	}, [name]);
 
 	const setData = useCallback(
@@ -23,5 +21,5 @@ export default function useLocalStorage<T>(
 		[name]
 	);
 
-	return [data, setData, isSet];
+	return [data, setData];
 }

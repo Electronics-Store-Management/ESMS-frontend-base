@@ -1,16 +1,10 @@
-import SideBar from "@/components/SideBar/SideBar";
-import { ModalProvider } from "@/contexts/ModalContext";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
 
 export default function Layout({ children }: ReactNodeChildren) {
-    return (
-        <div className=" w-screen h-screen flex">
-            <div className=" w-max">
-                <SideBar />
-            </div>
-            <div className=" pt-8 px-5 pr-8 w-full">
-                <ModalProvider>{children}</ModalProvider>
-            </div>
-        </div>
-    );
+	return (
+		<div className=" w-screen h-screen grid grid-cols-12">
+			<div className=" col-span-2 bg-red-500"></div>
+			<div className=" col-span-10 bg-green-500">{children}</div>
+		</div>
+	);
 }
