@@ -10,7 +10,7 @@ import {
 	HiShoppingBag,
 } from "react-icons/hi";
 
-import useLocalStorage from "@/hooks/useLocalStorage";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import { usePathname } from "next/navigation";
 import LOGO from "../../assets/logo.png";
 import FONT from "../../utils/fontFamily";
