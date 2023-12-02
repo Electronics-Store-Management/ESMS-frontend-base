@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-    button:focus {
-        @apply !outline-0;
-    }
+body {
+	
 }
-
