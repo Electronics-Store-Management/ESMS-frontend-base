@@ -1,44 +1,45 @@
 "use client";
 
 import viewCategoryList from "@/api/category/viewCategoryList.api";
-import addNewProduct from "@/api/product/addNewProduct.api";
 import useLoading from "@/hooks/useLoading";
 import Category from "@/types/entity/Category";
-import toast from "react-hot-toast";
+import React from "react";
 import { useMutation, useQuery } from "react-query";
+import { useCreateCategoryModal } from "./CreateCategoryFormModal";
+import toast from "react-hot-toast";
 import OperationStateToast from "../OperationStateToast/OperationStateToast";
-import { useCreateProductModal } from "./CreateProductFormModal";
-import CreateProductFormUI from "./CreateProductFormUI";
+import CreateCategoryFormUI from "./CreateCategoryFormUI";
+import addNewCategory from "@/api/category/addNewCategory.api";
 
-export default function CreateProductForm() {
+export default function CreateCategoryForm() {
     const { data: categories, isLoading: isCategoriesLoading } = useQuery<
         Category[]
     >(["category"], viewCategoryList);
     const { openLoading, closeLoading } = useLoading();
 
-    const { refetchProductList, closeCreateProductModal } =
-        useCreateProductModal();
+    const { refetchCategoryList, closeCreateCategoryModal } =
+        useCreateCategoryModal();
 
-    const { mutate } = useMutation(addNewProduct, {
+    const { mutate } = useMutation(addNewCategory, {
         onMutate: () => {
-            openLoading("Creating product...");
+            openLoading("Creating Category...");
         },
         onSettled: () => {
             closeLoading();
         },
         onSuccess: (_, data) => {
-            refetchProductList?.();
+            refetchCategoryList?.();
             toast.custom(
                 (t) => (
                     <OperationStateToast
                         isSuccess
-                        content="Creating product successfully"
+                        content="Creating Category successfully"
                         t={t}
                     />
                 ),
                 { duration: 3000 },
             );
-            closeCreateProductModal();
+            closeCreateCategoryModal();
         },
         onError: (error: any, data) => {
             toast.custom(
@@ -47,7 +48,7 @@ export default function CreateProductForm() {
                         isSuccess={false}
                         t={t}
                         title={error.message}
-                        content="Fail to create product"
+                        content="Fail to create Category"
                         retry={() => mutate(data)}
                     />
                 ),
@@ -57,7 +58,7 @@ export default function CreateProductForm() {
     });
 
     return (
-        <CreateProductFormUI
+        <CreateCategoryFormUI
             categories={categories}
             isCategoryLoading={isCategoriesLoading}
             onSubmitData={(data) => mutate(data)}
