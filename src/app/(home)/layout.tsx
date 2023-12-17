@@ -1,39 +1,12 @@
 import SideBar from "@/components/SideBar/SideBar";
-import API from "@/constants/apiEnpoint";
-import COOKIE_NAME from "@/constants/cookies";
-import SEARCH_PARAMS from "@/constants/searchParams";
 import { ModalProvider } from "@/contexts/ModalContext";
 import { ReactNodeChildren } from "@/types/ReactNodeChildren";
-import Staff from "@/types/entity/Staff";
-import withQuery from "@/utils/withQuery";
 
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
-
-export default async function Layout({ children }: ReactNodeChildren) {
-    const myHeaders = new Headers();
-    const accessToken = cookies().get("accessToken")?.value || "";
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    const redirectURI = headers().get(COOKIE_NAME.XURL) || "";
-
-    if (!accessToken)
-        redirect(
-            withQuery("/signin", {
-                [SEARCH_PARAMS.redirectUri]: redirectURI,
-            }),
-        );
-
-    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
-        headers: myHeaders,
-    });
-
-    const staffInfo: Staff = await staffInfoResponse.json();
-
+export default function Layout({ children }: ReactNodeChildren) {
     return (
         <div className=" w-screen h-screen flex">
             <div className=" w-max">
-                <SideBar staffInfo={staffInfo} />
+                <SideBar />
             </div>
             <div className=" pt-8 px-5 pr-8 w-full bg-background-normal">
                 <ModalProvider>{children}</ModalProvider>

@@ -4,11 +4,10 @@ import { HiPlus } from "react-icons/hi";
 import { useDeleteProductMutation } from "@/api/product/deleteProduct.api";
 import viewProductList from "@/api/product/viewProductList.api";
 import Button from "@/components/Button/Button";
-import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
+import DataTable from "@/components/DataTable/DataTable";
 import { useClaimModal } from "@/components/ClaimModal/ClaimModal";
 import { useCreateProductModal } from "@/components/CreateProductForm/CreateProductFormModal";
-import DataTable from "@/components/DataTable/DataTable";
-import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
 import PriceRangeFilter from "@/components/PriceRangeFilter/PriceRangeFilter";
 import ProductSearch from "@/components/ProductSearch/ProductSearch";
 import { useUpdateProductModal } from "@/components/UpdateProductForm/UpdateProductFormModal";
@@ -17,6 +16,8 @@ import ProductPreview from "@/types/entity/ProductPreview";
 import FORMATTER from "@/utils/formatter";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "react-query";
+import FilterBadge from "@/components/FilterBadge/FilterBadge";
+import { withoutQuery } from "@/utils/withQuery";
 
 export default function Page() {
     const router = useRouter();
