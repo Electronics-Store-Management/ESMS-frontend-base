@@ -16,21 +16,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Dashboard: Story = {
-    args: {
-        staffInfo: {
-            name: "",
-            phone: "",
-            email: "",
-            role: "ADMIN",
-            lastOnline: "",
-            citizenId: "",
-            accountNonExpired: false,
-            credentialsNonExpired: false,
-            accountNonLocked: false,
-            enabled: false,
-            id: "",
-        },
-    },
+    args: {},
     parameters: {
         nextjs: {
             appDirectory: true,
@@ -42,21 +28,7 @@ export const Dashboard: Story = {
 };
 
 export const Products: Story = {
-    args: {
-        staffInfo: {
-            name: "",
-            phone: "",
-            email: "",
-            role: "ADMIN",
-            lastOnline: "",
-            citizenId: "",
-            accountNonExpired: false,
-            credentialsNonExpired: false,
-            accountNonLocked: false,
-            enabled: false,
-            id: "",
-        },
-    },
+    args: {},
     parameters: {
         nextjs: {
             appDirectory: true,

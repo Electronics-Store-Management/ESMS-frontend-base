@@ -17,22 +17,22 @@ export default async function Layout({ children }: ReactNodeChildren) {
 
     const redirectURI = headers().get(COOKIE_NAME.XURL) || "";
 
-    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
-        headers: myHeaders,
-    });
-
-    if (staffInfoResponse.status !== 200)
+    if (!accessToken)
         redirect(
             withQuery("/signin", {
                 [SEARCH_PARAMS.redirectUri]: redirectURI,
             }),
         );
 
+    const staffInfoResponse = await fetch(API.staff.getStaffProfile, {
+        headers: myHeaders,
+    });
+
     const staffInfo: Staff = await staffInfoResponse.json();
 
     return (
         <div className=" w-screen h-screen flex">
-            <div className=" w-max z-50">
+            <div className=" w-max">
                 <SideBar staffInfo={staffInfo} />
             </div>
             <div className=" pt-8 px-5 pr-8 w-full bg-background-normal">
