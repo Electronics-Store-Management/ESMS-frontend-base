@@ -8,7 +8,7 @@ import {
 import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi";
 
 import Category from "@/types/entity/Category";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useDeepCompareEffect } from "react-use";
 import SEARCH_PARAMS from "../../constants/searchParams";
@@ -26,7 +26,6 @@ export default function ProductSearchUI({
     ...props
 }: PropTypes) {
     const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [category, setCategory] = useState<Category | undefined>();
@@ -98,7 +97,7 @@ export default function ProductSearchUI({
                     isLoading={isProductLoading}
                     onClick={() => {
                         router.push(
-                            withQuery(pathname, {
+                            withQuery("/product", {
                                 [SEARCH_PARAMS.productName]:
                                     productNameRef.current?.value,
                                 [SEARCH_PARAMS.categoryName]: category?.name,

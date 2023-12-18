@@ -10,10 +10,8 @@ export default function DataTable<T extends Object & BaseEntity>({
     isLoading = false,
     pick,
     className,
-    isEdit = true,
     onEdit = () => {},
     onDelete = () => {},
-    onClickRow = () => {},
     ...props
 }: PropTypes<T>) {
     return (
@@ -37,21 +35,18 @@ export default function DataTable<T extends Object & BaseEntity>({
                                 {column.title}
                             </Table.HeadCell>
                         ))}
-                        {isEdit && (
-                            <Table.HeadCell
-                                theme={tableTheme?.head?.cell}
-                                className={` w-10`}
-                            >
-                                <span className="sr-only">Edit</span>
-                            </Table.HeadCell>
-                        )}
+                        <Table.HeadCell
+                            theme={tableTheme?.head?.cell}
+                            className={` w-10`}
+                        >
+                            <span className="sr-only">Edit</span>
+                        </Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
                         {data.map((row, index) => (
                             <Table.Row
                                 key={row.id}
                                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                                onClick={() => onClickRow(row)}
                             >
                                 <Table.Cell
                                     theme={{
@@ -72,67 +67,47 @@ export default function DataTable<T extends Object & BaseEntity>({
                                             }`,
                                         }}
                                     >
-                                        {pick[column as keyof typeof row]
-                                            .editable ? (
-                                            <input
-                                                defaultValue={
-                                                    pick[
-                                                        column as keyof typeof row
-                                                    ].mapper?.(
-                                                        row[
-                                                            column as keyof typeof row
-                                                        ],
-                                                    ) ||
-                                                    (row[
-                                                        column as keyof typeof row
-                                                    ] as string)
-                                                }
-                                            />
-                                        ) : (
-                                            pick[
-                                                column as keyof typeof row
-                                            ].mapper?.(
-                                                row[column as keyof typeof row],
-                                            ) ||
+                                        {pick[
+                                            column as keyof typeof row
+                                        ].mapper?.(
+                                            row[column as keyof typeof row],
+                                        ) ||
                                             (row[
                                                 column as keyof typeof row
-                                            ] as string)
-                                        )}
+                                            ] as string)}
                                     </Table.Cell>
                                 ))}
-                                {isEdit && (
-                                    <Table.Cell theme={tableTheme?.body?.cell}>
-                                        <Dropdown
-                                            label=""
-                                            renderTrigger={() => (
-                                                <div>
-                                                    <Button btnType="secondary">
-                                                        <HiOutlineDotsVertical className=" w-4 h-4" />
-                                                    </Button>
-                                                </div>
-                                            )}
-                                            dismissOnClick={false}
+                                <Table.Cell theme={tableTheme?.body?.cell}>
+                                    <Dropdown
+                                        label=""
+                                        renderTrigger={() => (
+                                            <div>
+                                                <Button btnType="secondary">
+                                                    <HiOutlineDotsVertical className=" w-4 h-4" />
+                                                </Button>
+                                            </div>
+                                        )}
+                                        dismissOnClick={false}
+                                    >
+                                        <Dropdown.Item
+                                            icon={HiPencil}
+                                            onClick={() => onEdit(row)}
                                         >
-                                            <Dropdown.Item
-                                                icon={HiPencil}
-                                                onClick={() => onEdit(row)}
-                                            >
-                                                Edit
-                                            </Dropdown.Item>
-                                            <Dropdown.Item
-                                                theme={{
-                                                    icon: " text-red-600 mr-2 h-4 w-4",
-                                                }}
-                                                icon={HiTrash}
-                                                onClick={() => onDelete(row)}
-                                            >
-                                                <p className=" text-red-600">
-                                                    Delete
-                                                </p>
-                                            </Dropdown.Item>
-                                        </Dropdown>
-                                    </Table.Cell>
-                                )}
+                                            Edit
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            theme={{
+                                                icon: " text-red-600 mr-2 h-4 w-4",
+                                            }}
+                                            icon={HiTrash}
+                                            onClick={() => onDelete(row)}
+                                        >
+                                            <p className=" text-red-600">
+                                                Delete
+                                            </p>
+                                        </Dropdown.Item>
+                                    </Dropdown>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
@@ -173,9 +148,7 @@ type PropTypes<T> = {
     isLoading?: boolean;
     onEdit?: (product: T) => any;
     onDelete?: (product: T) => any;
-    onClickRow?: (product: T) => any;
     pick: { [key in keyof Partial<T>]: Column<T[key]> };
-    isEdit?: boolean;
 } & React.ComponentPropsWithoutRef<"div">;
 
 export type Column<T> = {
@@ -183,5 +156,4 @@ export type Column<T> = {
     size?: number;
     className?: string;
     mapper?: (value: T) => any;
-    editable?: boolean;
 };
