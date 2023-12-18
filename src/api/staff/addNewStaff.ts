@@ -7,7 +7,6 @@ export default async function addNewStaff(staff: NewStaff) {
 }
 
 export type NewStaff = {
-    id?: string;
     name: string;
     phone: string;
     email: string;
