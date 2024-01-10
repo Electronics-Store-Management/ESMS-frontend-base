@@ -24,8 +24,6 @@ export default React.forwardRef(function TextInput(
         rightAddon,
         addonClassName,
         rightAddonClassName,
-        readOnly,
-        value,
         ...props
     }: PropTypes,
     ref: ForwardedRef<HTMLInputElement>,
@@ -74,47 +72,35 @@ export default React.forwardRef(function TextInput(
 
     return (
         <div className={className}>
-            {readOnly ? (
-                <div className=" flex flex-col gap-1">
-                    <p className=" text-sm text-secondary-600">{title}</p>
-                    <p className=" text-base font-medium">{value}</p>
+            {title && (
+                <div className="mb-2 block">
+                    <Label
+                        htmlFor={title}
+                        className="font-semibold "
+                        value={title}
+                    />
                 </div>
-            ) : (
-                <>
-                    {title && (
-                        <div className="mb-2 block">
-                            <Label
-                                htmlFor={title}
-                                className="font-semibold "
-                                value={title}
-                            />
-                        </div>
-                    )}
-                    <div className="flex w-full">
-                        <_TextInput
-                            theme={customTheme}
-                            className="w-full"
-                            ref={ref}
-                            id={title}
-                            type={type}
-                            icon={icon}
-                            rightIcon={rightIcon}
-                            placeholder={placeholder}
-                            sizing={sizing}
-                            addon={addon}
-                            value={value}
-                            {...props}
-                            required
-                            autoComplete="off"
-                        />
-                        {rightAddon && (
-                            <span className={theme.rightAddon}>
-                                {rightAddon}
-                            </span>
-                        )}
-                    </div>
-                </>
             )}
+            <div className="flex w-full">
+                <_TextInput
+                    theme={customTheme}
+                    className="w-full"
+                    ref={ref}
+                    id={title}
+                    type={type}
+                    icon={icon}
+                    rightIcon={rightIcon}
+                    placeholder={placeholder}
+                    sizing={sizing}
+                    addon={addon}
+                    {...props}
+                    required
+                    autoComplete="off"
+                />
+                {rightAddon && (
+                    <span className={theme.rightAddon}>{rightAddon}</span>
+                )}
+            </div>
         </div>
     );
 });
