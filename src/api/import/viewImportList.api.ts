@@ -1,18 +1,12 @@
-import ImportBill, { ImportProductResponse } from "@/types/entity/ImportBill";
+import ImportBill from "@/types/entity/ImportBill";
 import apiInstance from "../apiInstance";
-import Revision from "@/types/Revision";
 
-export default async function viewImportList({
-    queryKey,
-}: {
-    queryKey: any;
-}): Promise<any> {
+export default async function viewImportList({ queryKey }: { queryKey: any }) {
     const [_key] = queryKey;
     const response = await apiInstance.get("/import");
 
-    const importList = response.data as Revision<
-        ImportBill<ImportProductResponse>
-    >[];
+    const importList = response.data as ImportBill[];
 
     return importList;
 }
+

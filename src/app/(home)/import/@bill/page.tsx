@@ -38,7 +38,7 @@ const Page = () => {
         onSettled: () => {
             closeLoading();
         },
-        onSuccess: (res: ImportBill<ImportProduct>, data) => {
+        onSuccess: (res: ImportBill, data) => {
             closeLoading();
             const link = `${window.location.origin}/import_bill/${res.id}`;
             createSuccessToast(
@@ -71,7 +71,7 @@ const Page = () => {
         control: billControll,
         getValues,
         setValue,
-    } = useForm<ImportBill<ImportProduct>>();
+    } = useForm<ImportBill>();
 
     function getRequest() {
         const importProducts = Array.from(billProducts.values()).map(
