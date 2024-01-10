@@ -1,7 +1,13 @@
-import BaseEntity from "@/types/entity/BaseEntity";
+import FONT from "@/utils/fontFamily";
+import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
 import {
-    HiOutlineX
+    HiOutlineDotsVertical,
+    HiPencil,
+    HiTrash,
+    HiOutlineX,
 } from "react-icons/hi";
+import Button from "../Button/Button";
+import BaseEntity from "@/types/entity/BaseEntity";
 import TextInput from "../Input/TextInput";
 
 export default function BillProductTable<T extends Object & BaseEntity>({
